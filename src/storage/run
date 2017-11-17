@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -f *.class
+javac *.java
+java Storage

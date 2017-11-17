@@ -1,0 +1,49 @@
+->>>>>>>>>>>>>>>>>>>>>>>Storage Library Documentation<<<<<<<<<<<<<<<<<-
+
+Purpose: 
+	Storage class is a library with extremly simple APIs which provides persistant storage of data on the disk as well as caching of data for better performance.
+
+Initialization:
+	In order to use the library, a Storage object must be initialized.
+	
+	Syntax: Storage(int size, CacheType type). Size specifies the amount of key value pairs that can be stored inside the cache. Type must be one of CacheType.FIFO(First In First Out), CacheType.LRU(Least Recently Used), and CacheType.LFU(Least Frequently Used)
+
+APIs:
+	Only two APIs are public and can be used by class users.
+
+	public DBResponse get(String key)throws IOException
+		-The function takes in a String object key and searches in the storage to see if there is anything match to the key
+		-Throws IOException
+		-Returns a DBResponse object(detailed structure of the object will be introduced below)
+
+	public DBResponse put(String key, String value)throws IOException
+		-The function takes in two String objects: key and value and performs different operations with differnet types of keys and values
+			-if key does not exist in storage, store it
+			-if key exist in storage and input value string is not null, change the value in the storage to the input value
+			-if key exist in storage and input value string is null, delete the key value pair in storage
+		-Throws IOException
+		-Returns a DBResponse object(detailed structure of the object will be introduced below)
+
+	Structure of DBResponse:
+		-DBResponse has three componnets
+			-boolean success: whether the request performed was successful or not(e.g. if trying to find a key that is not in storage then it is not successful)
+			-String key: the key of the response. THE VALUE IS UNDEFINED IF REQUEST WAS NOT SUCCESSFUL!!!!!!
+			-String value: the value of the response. THE VALUE IS UNDEFINED IF REQUEST WAS NOT SUCCESSFUL!!!!!!
+
+
+
+some IMPORTANT notice:
+	-the class assumes that the file "DBdata.dat" is only created and modified by this library. Do not mess with it manually!
+	-the class assumes that there is no file called "DBdatatemp____.dat" in the directory.
+	-the class assumes that there is no null characters in both key and value.
+	-the class DOES NOT have any restriction on length of the string.
+	-VELI VELI IMPORTANT: THIS LIBRARY IS NOT THREAD-SAFE!!! SO USE IT WITH MUTEX LOCKS IN MULTITHREADING.
+
+
+testing and debugging:
+	-I have provided a small testing shell in the library's main function so that anyone who thinks there might be a problem can try to figure out the problem without my assistance
+	-THE SHELL IS VERY EASY TO USE SO DONT HESITATE TO USE IT! To run the shell simply use my ./run
+	-Detailed instructions of how to use the shell is in the comment above the main function
+	-You can expicitly call the Storage.dumpStorage() function to dump the content of the disk and the cache
+	-If black magics happened with this shit, please message me the situation with the dump data. Thank you.
+
