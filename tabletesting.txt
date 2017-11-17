@@ -1,0 +1,9 @@
+CREATE peoplelist name age occupation
+INSERT peoplelist charlie 21 student
+INSERT peoplelist eric 22 student
+INSERT peoplelist oldstudent 80 student
+INSERT peoplelist profA 50 professor
+INSERT peoplelist profB 20 professor
+INSERT peoplelist profC 70 professor
+INSERT peoplelist fireguy 22 firefighter
+SELECT age name occupation FROM peoplelist WHERE occupation=="firefighter"||age>65&&(occupation=="student"||occupation=="professor")
