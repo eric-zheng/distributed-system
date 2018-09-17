@@ -10,54 +10,49 @@ import client.KVStore;
 
 import junit.framework.TestCase;
 
-
 public class ConnectionTest extends TestCase {
 
-	//@Test
+	// @Test
 	public void testConnectionSuccess() {
-		
+
 		Exception ex = null;
-		
+
 		KVStore kvClient = new KVStore("128.100.13.235", 52730);
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
 			ex = e;
-		}	
-		
+		}
+
 		assertNull(ex);
 	}
-	
-	//@Test
+
+	// @Test
 	public void testUnknownHost() {
 		Exception ex = null;
 		KVStore kvClient = new KVStore("unknown", 50000);
-		
+
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
-			ex = e; 
+			ex = e;
 		}
-		
+
 		assertTrue(ex instanceof UnknownHostException);
 	}
-	
-	//@Test
+
+	// @Test
 	public void testIllegalPort() {
 		Exception ex = null;
 		KVStore kvClient = new KVStore("localhost", 123456789);
-		
+
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
-			ex = e; 
+			ex = e;
 		}
-		
+
 		assertTrue(ex instanceof IllegalArgumentException);
 	}
-	
-	
 
-	
 }
-

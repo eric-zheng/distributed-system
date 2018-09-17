@@ -25,8 +25,7 @@ public class Metadata {
 
 		for (String entry : metaDataString.split("_")) {
 			String[] part = entry.split(":");
-			metaData.add(new Entry(part[0], part[1], part[2], part[3], part[4],
-					part[5]));
+			metaData.add(new Entry(part[0], part[1], part[2], part[3], part[4], part[5]));
 		}
 	}
 
@@ -35,8 +34,7 @@ public class Metadata {
 
 		for (String entry : metaDataString.split("_")) {
 			String[] part = entry.split(":");
-			metaData.add(new Entry(part[0], part[1], part[2], part[3], part[4],
-					part[5]));
+			metaData.add(new Entry(part[0], part[1], part[2], part[3], part[4], part[5]));
 		}
 	}
 
@@ -44,16 +42,16 @@ public class Metadata {
 	// calculate their range and load them into the metaData
 	// need to change , assume at lease three server
 	public Metadata(ArrayList<String> nodes) {
-		
+
 		// assume nodes are in form of
 		ArrayList<String> replicaStart = new ArrayList<String>();
 		this.metaData = new ArrayList<Entry>();
 		for (String oneNode : nodes) {
 			String[] hold = oneNode.split(":");
-			metaData.add(new Entry(hold[0], hold[1], "0", Helper
-					.getMD5String(oneNode), "0", Helper.getMD5String(oneNode)));
+			metaData.add(
+					new Entry(hold[0], hold[1], "0", Helper.getMD5String(oneNode), "0", Helper.getMD5String(oneNode)));
 		}
-		
+
 		Collections.sort(metaData);
 
 		String start = "00000000000000000000000000000000";
@@ -117,7 +115,8 @@ public class Metadata {
 		for (int i = 0; i < metaData.size() && i < metaData.size(); i++) {
 			metaData.get(i).setReplicaStart(replicaStart.get(i));
 			// System.out.println("Add one");
-			// System.out.println("R Start string is"+metaData.get(i).getReplicaStartString());
+			// System.out.println("R Start string
+			// is"+metaData.get(i).getReplicaStartString());
 			// System.out.println("R End string is"+metaData.get(i).getReplicaEndString());
 			// metaData.get(i).setReplicaEnd(Helper.getMD5String(metaData.get(i).getAddressPortString()));
 		}
@@ -144,7 +143,8 @@ public class Metadata {
 	// }
 	// }
 	// if(start == null){
-	// System.out.println("Did not find the range and name while trying to remove node");
+	// System.out.println("Did not find the range and name while trying to remove
+	// node");
 	// }else{
 	//
 	// BigInteger find= new BigInteger(Helper.getMD5String(node),16); // md5 end
@@ -163,7 +163,8 @@ public class Metadata {
 	// }
 	// }
 	// if(address== null){
-	// System.out.println("Did not find the next server while trying to remove node");
+	// System.out.println("Did not find the next server while trying to remove
+	// node");
 	// }
 	// else{
 	// Entry last = new Entry(address,port,start,Helper.getMD5String(node));
@@ -194,7 +195,8 @@ public class Metadata {
 	//
 	// // System.out.println("Range found is "+address+port+end);
 	// if(end == null){
-	// System.out.println("Did not find the range and name while trying to add node");
+	// System.out.println("Did not find the range and name while trying to add
+	// node");
 	// }
 	// else{
 	//
@@ -255,8 +257,7 @@ public class Metadata {
 	public Entry searchReplica(String MDFive, String server) {
 		for (Entry iter : metaData) {
 			if (iter.inReplicaRange(MDFive)) {
-				if (iter.getAddressPortString().equals(server)
-						|| server == null) {
+				if (iter.getAddressPortString().equals(server) || server == null) {
 					return iter;
 				}
 			}
@@ -299,15 +300,14 @@ public class Metadata {
 	}
 
 	// test function, adding a specific metadata
-	public void addMeta(String a, String b, String c, String d, String e,
-			String f) {
+	public void addMeta(String a, String b, String c, String d, String e, String f) {
 		metaData.add(new Entry(a, b, c, d, e, f));
 		System.out.println("addSuccess");
 	}
 
 	/**
-	 * return the range of given server in metadata, return a string in format
-	 * of "start:end"
+	 * return the range of given server in metadata, return a string in format of
+	 * "start:end"
 	 * 
 	 * @param server
 	 * @return
@@ -315,10 +315,8 @@ public class Metadata {
 	public String getReplicaRange(String server) {
 
 		for (Entry iter : metaData) {
-			if (iter.inReplicaRange(Helper.getMD5String(server))
-					&& iter.getAddressPortString().equals(server)) {
-				return iter.getReplicaStartString() + ":"
-						+ iter.getReplicaEndString();
+			if (iter.inReplicaRange(Helper.getMD5String(server)) && iter.getAddressPortString().equals(server)) {
+				return iter.getReplicaStartString() + ":" + iter.getReplicaEndString();
 			}
 		}
 		return null;
@@ -328,18 +326,15 @@ public class Metadata {
 
 		for (Entry iter : metaData) {
 			if (iter.inCoordRange(Helper.getMD5String(server))) {
-				return iter.getCoordStartString() + ":"
-						+ iter.getCoordEndString();
+				return iter.getCoordStartString() + ":" + iter.getCoordEndString();
 			}
 		}
 		return null;
 	}
-	
-	public ArrayList<Entry> getMetaEntry(){
-		
+
+	public ArrayList<Entry> getMetaEntry() {
+
 		return this.metaData;
 	}
-	
-
 
 }

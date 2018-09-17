@@ -133,15 +133,10 @@ public class AdditionalTest extends TestCase {
 			ex3 = e;
 		}
 
-		assertTrue(ex1 == null
-				&& ex2 == null
-				&& ex3 == null
-				&& (response1.getStatus() == StatusType.PUT_SUCCESS || response1
-						.getStatus() == StatusType.PUT_UPDATE)
-				&& (response2.getStatus() == StatusType.PUT_SUCCESS || response2
-						.getStatus() == StatusType.PUT_UPDATE)
-				&& (response3.getStatus() == StatusType.PUT_SUCCESS || response3
-						.getStatus() == StatusType.PUT_UPDATE));
+		assertTrue(ex1 == null && ex2 == null && ex3 == null
+				&& (response1.getStatus() == StatusType.PUT_SUCCESS || response1.getStatus() == StatusType.PUT_UPDATE)
+				&& (response2.getStatus() == StatusType.PUT_SUCCESS || response2.getStatus() == StatusType.PUT_UPDATE)
+				&& (response3.getStatus() == StatusType.PUT_SUCCESS || response3.getStatus() == StatusType.PUT_UPDATE));
 	}
 
 	/**
@@ -168,10 +163,8 @@ public class AdditionalTest extends TestCase {
 			ex = e;
 		}
 
-		assertTrue(ex == null && response1.getStatus() == StatusType.PUT_UPDATE
-				&& response1.getValue().equals(value2)
-				&& response2.getStatus() == StatusType.GET_SUCCESS
-				&& response2.getValue().equals(value2));
+		assertTrue(ex == null && response1.getStatus() == StatusType.PUT_UPDATE && response1.getValue().equals(value2)
+				&& response2.getStatus() == StatusType.GET_SUCCESS && response2.getValue().equals(value2));
 	}
 
 	/**
@@ -200,9 +193,7 @@ public class AdditionalTest extends TestCase {
 			ex = e;
 		}
 
-		assertTrue(ex == null
-				&& response1.getStatus() == StatusType.GET_SUCCESS
-				&& response1.getValue().equals("v1"));
+		assertTrue(ex == null && response1.getStatus() == StatusType.GET_SUCCESS && response1.getValue().equals("v1"));
 
 	}
 
@@ -293,10 +284,8 @@ public class AdditionalTest extends TestCase {
 			ex1 = e;
 		}
 
-		assertTrue(ex1 == null
-				&& response1.getStatus() == StatusType.PUT_SUCCESS
-				&& response2.getStatus() == StatusType.GET_SUCCESS
-				&& response2.getValue().equals("yes"));
+		assertTrue(ex1 == null && response1.getStatus() == StatusType.PUT_SUCCESS
+				&& response2.getStatus() == StatusType.GET_SUCCESS && response2.getValue().equals("yes"));
 	}
 
 	/**
@@ -316,10 +305,8 @@ public class AdditionalTest extends TestCase {
 			ex1 = e;
 		}
 
-		assertTrue(ex1 == null
-				&& response1.getStatus() == StatusType.PUT_SUCCESS
-				&& response2.getStatus() == StatusType.GET_SUCCESS
-				&& response2.getValue().equals("y e s"));
+		assertTrue(ex1 == null && response1.getStatus() == StatusType.PUT_SUCCESS
+				&& response2.getStatus() == StatusType.GET_SUCCESS && response2.getValue().equals("y e s"));
 	}
 
 	/**
@@ -336,8 +323,7 @@ public class AdditionalTest extends TestCase {
 			ex1 = e;
 		}
 
-		assertTrue(ex1 == null
-				&& response1.getStatus() == StatusType.DELETE_ERROR);
+		assertTrue(ex1 == null && response1.getStatus() == StatusType.DELETE_ERROR);
 	}
 
 	@Test
@@ -356,16 +342,14 @@ public class AdditionalTest extends TestCase {
 			ex1 = e;
 		}
 
-		assertTrue(ex1 == null
-				&& response1.getStatus() == StatusType.PUT_SUCCESS);
+		assertTrue(ex1 == null && response1.getStatus() == StatusType.PUT_SUCCESS);
 	}
-	
+
 	/*---------------------------ecs---------------------------*/
 	@Test
 	public void testInit() {
-		
-		assertTrue(addressFree("128.100.13.235:52730") == false
-				&& addressFree("128.100.13.235:52731") == false
+
+		assertTrue(addressFree("128.100.13.235:52730") == false && addressFree("128.100.13.235:52731") == false
 				&& addressFree("128.100.13.235:52732") == false);
 	}
 
@@ -380,69 +364,69 @@ public class AdditionalTest extends TestCase {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			e1=e;
+			e1 = e;
 		}
 
-		assertTrue(e1 == null && m.getStatus() == StatusType.GET_SUCCESS
-				&& m.getValue().equals("v1"));
+		assertTrue(e1 == null && m.getStatus() == StatusType.GET_SUCCESS && m.getValue().equals("v1"));
 	}
-	
+
 	@Test
-	public void testAdd(){
+	public void testAdd() {
 		ecs.addNode(10, "FIFO");
-		while(addressFree("128.100.13.235:52733"));
-		KVStore temp=new KVStore("128.100.13.235", 52733);
+		while (addressFree("128.100.13.235:52733"))
+			;
+		KVStore temp = new KVStore("128.100.13.235", 52733);
 		temp.disconnect();
-		
+
 		assertTrue(true);
 	}
-	
+
 	@Test
-	public void testRemove(){
+	public void testRemove() {
 		ecs.removeNode();
 		assertTrue(addressFree("128.100.13.235:52733"));
 	}
-	
+
 	@Test
-	public void testReinitialization(){
-		
-		boolean reinitialized=ecs.initService(1,1,"FIFO");
-		
-		assertTrue(reinitialized==false);
+	public void testReinitialization() {
+
+		boolean reinitialized = ecs.initService(1, 1, "FIFO");
+
+		assertTrue(reinitialized == false);
 	}
-	
-	@Test 
-	public void testMetaTransportation(){
+
+	@Test
+	public void testMetaTransportation() {
 		ArrayList<String> r = new ArrayList<String>();
 		r.add("128.100.13.234:52730");
 		r.add("128.100.13.234:52731");
 		r.add("128.100.13.234:52732");
 		r.add("128.100.13.234:52733");
-		
+
 		Metadata ts = new Metadata(r);
-		
-		String rebuiltString=ts.sendMeta();
-		String again=new Metadata(rebuiltString).sendMeta();
-		
+
+		String rebuiltString = ts.sendMeta();
+		String again = new Metadata(rebuiltString).sendMeta();
+
 		assertTrue(rebuiltString.equals(again));
-	}	
-	
-//
-//	/**
-//	 * Create multiple clients
-//	 * 
-//	 * @param num_clients
-//	 */
-//	// public ArrayList<KVStore> connectMultiClients (int num_clients) {
-//	// ArrayList<KVStore> rtn = new ArrayList<KVStore>();
-//	//
-//	// for (int i = 0; i < num_clients; i++) {
-//	// rtn.add(new KVStore("localhost", (50000)));
-//	// }
-//	//
-//	// return rtn;
-//	// }
-//
+	}
+
+	//
+	// /**
+	// * Create multiple clients
+	// *
+	// * @param num_clients
+	// */
+	// // public ArrayList<KVStore> connectMultiClients (int num_clients) {
+	// // ArrayList<KVStore> rtn = new ArrayList<KVStore>();
+	// //
+	// // for (int i = 0; i < num_clients; i++) {
+	// // rtn.add(new KVStore("localhost", (50000)));
+	// // }
+	// //
+	// // return rtn;
+	// // }
+	//
 	/*-----------------------M3--------------------------*/
 	@Test
 	public void testMetaConstructorOne() {
@@ -454,7 +438,8 @@ public class AdditionalTest extends TestCase {
 		r.add("128.100.13.234:52733");
 
 		Metadata ts = new Metadata(r);
-		assertTrue(ts.sendMeta().equals("128.100.13.234:52730:C4035BA5776F9556487296449F1BE645:06AB163B0D306B7F50CF61747A35C6BE:35FABBC631829A0C5DABD3F07F480D15:06AB163B0D306B7F50CF61747A35C6BE_128.100.13.234:52731:06AB163B0D306B7F50CF61747A35C6BF:35FABBC631829A0C5DABD3F07F480D14:4A1A2F0DB27A84D6364A93572A38D267:35FABBC631829A0C5DABD3F07F480D14_128.100.13.234:52732:35FABBC631829A0C5DABD3F07F480D15:4A1A2F0DB27A84D6364A93572A38D266:C4035BA5776F9556487296449F1BE645:4A1A2F0DB27A84D6364A93572A38D266_128.100.13.234:52733:4A1A2F0DB27A84D6364A93572A38D267:C4035BA5776F9556487296449F1BE644:06AB163B0D306B7F50CF61747A35C6BF:C4035BA5776F9556487296449F1BE644"));
+		assertTrue(ts.sendMeta().equals(
+				"128.100.13.234:52730:C4035BA5776F9556487296449F1BE645:06AB163B0D306B7F50CF61747A35C6BE:35FABBC631829A0C5DABD3F07F480D15:06AB163B0D306B7F50CF61747A35C6BE_128.100.13.234:52731:06AB163B0D306B7F50CF61747A35C6BF:35FABBC631829A0C5DABD3F07F480D14:4A1A2F0DB27A84D6364A93572A38D267:35FABBC631829A0C5DABD3F07F480D14_128.100.13.234:52732:35FABBC631829A0C5DABD3F07F480D15:4A1A2F0DB27A84D6364A93572A38D266:C4035BA5776F9556487296449F1BE645:4A1A2F0DB27A84D6364A93572A38D266_128.100.13.234:52733:4A1A2F0DB27A84D6364A93572A38D267:C4035BA5776F9556487296449F1BE644:06AB163B0D306B7F50CF61747A35C6BF:C4035BA5776F9556487296449F1BE644"));
 
 	}
 
@@ -468,9 +453,8 @@ public class AdditionalTest extends TestCase {
 		r.add("128.100.13.234:52733");
 
 		Metadata ts = new Metadata(r);
-		assertTrue(ts
-				.sendMeta()
-				.equals("128.100.13.234:52730:C4035BA5776F9556487296449F1BE645:06AB163B0D306B7F50CF61747A35C6BE:35FABBC631829A0C5DABD3F07F480D15:06AB163B0D306B7F50CF61747A35C6BE_128.100.13.234:52731:06AB163B0D306B7F50CF61747A35C6BF:35FABBC631829A0C5DABD3F07F480D14:4A1A2F0DB27A84D6364A93572A38D267:35FABBC631829A0C5DABD3F07F480D14_128.100.13.234:52732:35FABBC631829A0C5DABD3F07F480D15:4A1A2F0DB27A84D6364A93572A38D266:C4035BA5776F9556487296449F1BE645:4A1A2F0DB27A84D6364A93572A38D266_128.100.13.234:52733:4A1A2F0DB27A84D6364A93572A38D267:C4035BA5776F9556487296449F1BE644:06AB163B0D306B7F50CF61747A35C6BF:C4035BA5776F9556487296449F1BE644"));
+		assertTrue(ts.sendMeta().equals(
+				"128.100.13.234:52730:C4035BA5776F9556487296449F1BE645:06AB163B0D306B7F50CF61747A35C6BE:35FABBC631829A0C5DABD3F07F480D15:06AB163B0D306B7F50CF61747A35C6BE_128.100.13.234:52731:06AB163B0D306B7F50CF61747A35C6BF:35FABBC631829A0C5DABD3F07F480D14:4A1A2F0DB27A84D6364A93572A38D267:35FABBC631829A0C5DABD3F07F480D14_128.100.13.234:52732:35FABBC631829A0C5DABD3F07F480D15:4A1A2F0DB27A84D6364A93572A38D266:C4035BA5776F9556487296449F1BE645:4A1A2F0DB27A84D6364A93572A38D266_128.100.13.234:52733:4A1A2F0DB27A84D6364A93572A38D267:C4035BA5776F9556487296449F1BE644:06AB163B0D306B7F50CF61747A35C6BF:C4035BA5776F9556487296449F1BE644"));
 
 	}
 
@@ -564,17 +548,13 @@ public class AdditionalTest extends TestCase {
 
 		Metadata ts = new Metadata(r);
 
-		assertTrue(ts
-				.getReplicaRange("128.100.13.234:52730")
+		assertTrue(ts.getReplicaRange("128.100.13.234:52730")
 				.equals("35FABBC631829A0C5DABD3F07F480D15:06AB163B0D306B7F50CF61747A35C6BE"));
-		assertTrue(ts
-				.getReplicaRange("128.100.13.234:52731")
+		assertTrue(ts.getReplicaRange("128.100.13.234:52731")
 				.equals("4A1A2F0DB27A84D6364A93572A38D267:35FABBC631829A0C5DABD3F07F480D14"));
-		assertTrue(ts
-				.getReplicaRange("128.100.13.234:52732")
+		assertTrue(ts.getReplicaRange("128.100.13.234:52732")
 				.equals("C4035BA5776F9556487296449F1BE645:4A1A2F0DB27A84D6364A93572A38D266"));
-		assertTrue(ts
-				.getReplicaRange("128.100.13.234:52733")
+		assertTrue(ts.getReplicaRange("128.100.13.234:52733")
 				.equals("06AB163B0D306B7F50CF61747A35C6BF:C4035BA5776F9556487296449F1BE644"));
 
 	}
@@ -590,17 +570,13 @@ public class AdditionalTest extends TestCase {
 
 		Metadata ts = new Metadata(r);
 
-		assertTrue(ts
-				.getCoordRange("128.100.13.234:52730")
+		assertTrue(ts.getCoordRange("128.100.13.234:52730")
 				.equals("C4035BA5776F9556487296449F1BE645:06AB163B0D306B7F50CF61747A35C6BE"));
-		assertTrue(ts
-				.getCoordRange("128.100.13.234:52731")
+		assertTrue(ts.getCoordRange("128.100.13.234:52731")
 				.equals("06AB163B0D306B7F50CF61747A35C6BF:35FABBC631829A0C5DABD3F07F480D14"));
-		assertTrue(ts
-				.getCoordRange("128.100.13.234:52732")
+		assertTrue(ts.getCoordRange("128.100.13.234:52732")
 				.equals("35FABBC631829A0C5DABD3F07F480D15:4A1A2F0DB27A84D6364A93572A38D266"));
-		assertTrue(ts
-				.getCoordRange("128.100.13.234:52733")
+		assertTrue(ts.getCoordRange("128.100.13.234:52733")
 				.equals("4A1A2F0DB27A84D6364A93572A38D267:C4035BA5776F9556487296449F1BE644"));
 
 	}
@@ -620,17 +596,14 @@ public class AdditionalTest extends TestCase {
 			e1 = e;
 		}
 
-		assertTrue(e1 == null && m.getStatus() == StatusType.GET_SUCCESS
-				&& m.getValue().equals("123"));
+		assertTrue(e1 == null && m.getStatus() == StatusType.GET_SUCCESS && m.getValue().equals("123"));
 	}
 
 	@Test
 	public void testRevive() {
 		Exception e1 = null;
 		try {
-			Runtime.getRuntime()
-					.exec("ssh -n 128.100.13.235 nohup 'lsof -t -i:52732 | xargs kill'")
-					.waitFor();
+			Runtime.getRuntime().exec("ssh -n 128.100.13.235 nohup 'lsof -t -i:52732 | xargs kill'").waitFor();
 			TimeUnit.MILLISECONDS.sleep(10000);
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
@@ -662,45 +635,45 @@ public class AdditionalTest extends TestCase {
 		}
 	}
 
-//	/*********************** for ECS *******************/
-//	
-//
-//	/*************************** function to load data set */
-//
-//	public static ArrayList<Pair> recur(ArrayList<Pair> hehe, String path) {
-//
-//		System.out.println("Path is" + path);
-//
-//		File folder = new File(path);
-//		File[] listOfFiles = folder.listFiles();
-//
-//		for (int i = 0; i < listOfFiles.length; i++) {
-//			if (listOfFiles[i].isFile()) {
-//				System.out.println("File " + listOfFiles[i].getName());
-//				hehe.add(new Pair(path + "/" + listOfFiles[i].getName(),
-//						readFile(path + "/" + listOfFiles[i].getName(),
-//								StandardCharsets.UTF_8)));
-//			} else if (listOfFiles[i].isDirectory()) {
-//				String newPath = path + "/" + listOfFiles[i].getName();
-//				System.out.println("Directory " + listOfFiles[i].getName());
-//				return recur(hehe, newPath);
-//
-//			}
-//		}
-//
-//		return null;
-//	}
-//
-//	static String readFile(String path, Charset encoding) {
-//		byte[] encoded = null;
-//		try {
-//			encoded = Files.readAllBytes(Paths.get(path));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return new String(encoded, encoding);
-//	}
+	// /*********************** for ECS *******************/
+	//
+	//
+	// /*************************** function to load data set */
+	//
+	// public static ArrayList<Pair> recur(ArrayList<Pair> hehe, String path) {
+	//
+	// System.out.println("Path is" + path);
+	//
+	// File folder = new File(path);
+	// File[] listOfFiles = folder.listFiles();
+	//
+	// for (int i = 0; i < listOfFiles.length; i++) {
+	// if (listOfFiles[i].isFile()) {
+	// System.out.println("File " + listOfFiles[i].getName());
+	// hehe.add(new Pair(path + "/" + listOfFiles[i].getName(),
+	// readFile(path + "/" + listOfFiles[i].getName(),
+	// StandardCharsets.UTF_8)));
+	// } else if (listOfFiles[i].isDirectory()) {
+	// String newPath = path + "/" + listOfFiles[i].getName();
+	// System.out.println("Directory " + listOfFiles[i].getName());
+	// return recur(hehe, newPath);
+	//
+	// }
+	// }
+	//
+	// return null;
+	// }
+	//
+	// static String readFile(String path, Charset encoding) {
+	// byte[] encoded = null;
+	// try {
+	// encoded = Files.readAllBytes(Paths.get(path));
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// return new String(encoded, encoding);
+	// }
 
 }
 
